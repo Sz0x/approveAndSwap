@@ -5,7 +5,7 @@ import TransactionModal from './components/transactionModal'
 
 function App() {
   const [showModal, setShowModal] = useState<boolean>(false)
-  const approveAndSwapSteps = useApproveAndSwap()
+  const { approveAndSwapSteps, approveAndSwap } = useApproveAndSwap()
 
   return (
     <div>
