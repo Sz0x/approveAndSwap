@@ -1,4 +1,5 @@
-import { useContractWrite, usePrepareContractWrite, erc721ABI } from 'wagmi'
+import { useContractWrite, usePrepareContractWrite, erc721ABI,  } from 'wagmi'
+import { waitForTransaction } from '@wagmi/core'
 
 type ApproveProps = {};
 type TransferProps = {};
@@ -53,8 +54,10 @@ const useApproveAndSwap = () => {
 
   const approveAndSwap = async () => {
     if (!approveDoodle.writeAsync || !transferDoodle.writeAsync) return
-    await approveDoodle.writeAsync()
-    await transferDoodle.writeAsync()
+    const approveHash = await approveDoodle.writeAsync()
+    await waitForTransaction(approveHash)
+    const transferHash = await transferDoodle.writeAsync()
+    await waitForTransaction(transferHash)
   }
 
   return { approveAndSwapSteps, approveAndSwap }
